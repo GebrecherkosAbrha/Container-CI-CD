@@ -1,0 +1,78 @@
+name: Build, Test, and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-test-and-push:
+    name: Build, Test, and Push Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      # Step 4: Run tests using pytest
+      - name: Run unit tests
+        run: |
+          pytest
+
+      # Step 5: Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Step 6: Extract metadata (tags, labels) for Docker image
+      - name: Extract metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ secrets.DOCKER_USERNAME }}/my-app-ci-cd
+
+      # Step 7: Build the Docker image
+      - name: Build Docker image
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      # Step 8: Push the Docker image
+      - name: Push Docker image
+        id: push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      # Step 9: Notify on success or failure
+      - name: Notify build status
+        if: always()
+        run: |
+          if [[ ${{ steps.build.outcome }} == 'success' && ${{ steps.push.outcome }} == 'success' ]]; then
+            echo "Build and push succeeded!"
+          elif [[ ${{ steps.build.outcome }} == 'success' ]]; then
+            echo "Build succeeded, but push failed."
+          else
+            echo "Build failed."
+          fi
