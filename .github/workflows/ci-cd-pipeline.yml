@@ -45,34 +45,26 @@ jobs:
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/my-app-ci-cd
 
-      # Step 7: Build the Docker image
-      - name: Build Docker image
-        id: build
+      # Debug: Print the Docker tags
+      - name: Debug Docker Tags
+        run: echo "Docker Tags: ${{ steps.meta.outputs.tags }}"
+
+      # Step 7: Build and Push Docker image
+      - name: Build and Push Docker image
+        id: build-push
         uses: docker/build-push-action@v5
         with:
           context: .
-          push: false
+          push: true  # Push the image in this step
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      # Step 8: Push the Docker image
-      - name: Push Docker image
-        id: push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-
-      # Step 9: Notify on success or failure
+      # Step 8: Notify on success or failure
       - name: Notify build status
         if: always()
         run: |
-          if [[ ${{ steps.build.outcome }} == 'success' && ${{ steps.push.outcome }} == 'success' ]]; then
-            echo "Build and push succeeded!"
-          elif [[ ${{ steps.build.outcome }} == 'success' ]]; then
-            echo "Build succeeded, but push failed."
+          if [[ ${{ steps.build-push.outcome }} == 'success' ]]; then
+            echo "::notice::Build and push succeeded!"
           else
-            echo "Build failed."
+            echo "::error::Build failed."
           fi
