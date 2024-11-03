@@ -30,12 +30,24 @@
 
 2.  Create a virtual environment and activate it:
 
-           ```bash
-            python -m venv venv
-           source venv/bin/activate # On Windows use `venv\Scripts\activate`
-           ```
+```bash
+python -m venv venv
+```
 
-4.  Install the required dependencies:
+- **Activate the Virtual Environment:**
+  **On Windows:**
+
+  ```bash
+      venv\Scripts\activate
+  ```
+
+  **On macOS/Linux:**
+
+  ```bash
+      source venv/bin/activate
+  ```
+
+3.  Install the required dependencies:
 
     ```bash
     pip install -r requirements.txt
