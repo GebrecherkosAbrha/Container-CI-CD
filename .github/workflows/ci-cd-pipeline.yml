@@ -47,7 +47,8 @@ jobs:
 
       # Debug: Print the Docker tags
       - name: Debug Docker Tags
-        run: echo "Docker Tags: ${{ steps.meta.outputs.tags }}"
+        run: |
+          echo "Docker Tags: ${{ steps.meta.outputs.tags }}"
 
       # Step 7: Build and Push Docker image
       - name: Build and Push Docker image
@@ -55,7 +56,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          push: true  # Push the image in this step
+          push: true # Push the image in this step
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
