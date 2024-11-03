@@ -43,7 +43,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ secrets.DOCKER_USERNAME }}/my-app-ci-cd
+          images: gebrecherkos/my-app-ci-cd
 
       # Debug: Print the Docker tags
       - name: Debug Docker Tags
