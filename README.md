@@ -60,7 +60,6 @@ python -m venv venv
 ```bash
 pytest
 ```
-
 2. Build the Docker image locally:
 
 ```bash
