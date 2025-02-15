@@ -2,7 +2,7 @@
 
 ## Overview
 
-**My App CI/CD** is a Python application that demonstrates a complete Continuous Integration and Continuous Deployment (CI/CD) pipeline using GitHub Actions and Docker. The project includes automated testing, building Docker images, and pushing them to Docker Hub.
+**My App CI/CD** is a Python application that demonstrates a complete Continuous Integration and Continuous Deployment (CI/CD) pipeline using GitHub Actions and Docker. The project includes automated testing, building Docker images,  and pushing them to Docker Hub.
 
 ## Features
 
