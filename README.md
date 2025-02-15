@@ -1,14 +1,15 @@
-# my-app-ci-cd
+# Container-CI-CD
 
 ## Overview
 
-**My App CI/CD** is a Python application that demonstrates a complete Continuous Integration and Continuous Deployment (CI/CD) pipeline using GitHub Actions and Docker. The project includes automated testing, building Docker images,  and pushing them to Docker Hub.
+**Container-CI-CD** is a Python application demonstrating a Continuous Integration and Continuous Deployment (CI/CD) pipeline using GitHub Actions and Docker. The current setup includes automated testing, building Docker images, and pushing them to Docker Hub. Future enhancements will include Kubernetes deployment.  
 
 ## Features
 
 - Automated testing with `pytest`.
 - Docker containerization for easy deployment.
 - CI/CD pipeline configured with GitHub Actions.
+- Kubernetes deployment (Planned)  
 
 ## Getting Started
 
@@ -83,6 +84,7 @@ The CI/CD pipeline is configured using GitHub Actions. On every push to the `mai
 - **Install dependencies.**
 - **Run tests using pytest.**
 - **Build and push the Docker image to Docker Hub.**
+- **(Planned) Deploy the container to Kubernetes**
 
 ## Secrets Management
 
